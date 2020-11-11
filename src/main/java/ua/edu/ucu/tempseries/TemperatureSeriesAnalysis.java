@@ -2,14 +2,13 @@ package ua.edu.ucu.tempseries;
 
 import java.util.*;
 
-import static java.lang.Math.sqrt;
-import static java.lang.Math.abs;
-import static java.util.Arrays.copyOf;
+import static java.lang.Math.*;
+import static java.util.Arrays.*;
 
 public class TemperatureSeriesAnalysis {
 
     public double[] temperatures;
-    public int minTemperature = -273;
+    static final int minTemperature = -273;
 
     public TemperatureSeriesAnalysis() {
         temperatures = new double[]{};
@@ -21,16 +20,16 @@ public class TemperatureSeriesAnalysis {
                 throw new InputMismatchException("There is a value less than -273C");
             }
         }
-        temperatures = temperatureSeries;
+        temperatures = copyOf(temperatureSeries, temperatureSeries.length);
     }
 
     public double average() {
-        if (temperatures.length == 0){
-            throw new IllegalArgumentException ("The temperature array is empty");
+        if (temperatures.length == 0) {
+            throw new IllegalArgumentException("The temperature array is empty");
         }
         else {
             double sumElements = 0;
-            for(double element: temperatures){
+            for(double element: temperatures) {
                 sumElements += element;
             }
             return sumElements/temperatures.length;
@@ -38,8 +37,8 @@ public class TemperatureSeriesAnalysis {
     }
 
     public double deviation() {
-        if (temperatures.length == 0){
-            throw new IllegalArgumentException ("The temperature array is empty");
+        if (temperatures.length == 0) {
+            throw new IllegalArgumentException("The temperature array is empty");
         }
         else {
             double mean = average();
@@ -65,7 +64,7 @@ public class TemperatureSeriesAnalysis {
     }
 
     public double max() {
-        if(temperatures.length == 0){
+        if(temperatures.length == 0) {
             throw new IllegalArgumentException("The temperature array is empty");
         }
         else {
@@ -81,16 +80,15 @@ public class TemperatureSeriesAnalysis {
     public double findTempClosestToValue(double tempValue) {
         double minDifference = Double.POSITIVE_INFINITY;
         double elementWithMinDifference = 0;
-        for(double temperature: temperatures){
+        for(double temperature: temperatures) {
             double curDifference = abs(abs(temperature) - abs(tempValue));
-            if(curDifference < minDifference){
+            if(curDifference < minDifference) {
                 minDifference = curDifference;
                 elementWithMinDifference = temperature;
             }
-            else if(curDifference == minDifference){
+            else if(curDifference == minDifference) {
                 if(elementWithMinDifference < temperature) {
                     elementWithMinDifference = temperature;
-                    ;
                 }
             }
         }
@@ -133,7 +131,7 @@ public class TemperatureSeriesAnalysis {
     public int addTemps(double... temps) {
         int sumResult = 0;
 
-        for(double temperature:temperatures){
+        for(double temperature:temperatures) {
             sumResult += temperature;
         }
 
@@ -141,16 +139,16 @@ public class TemperatureSeriesAnalysis {
         int initialLength = temperatures.length;
         temperatures = copyOf(temperatures, previousLength*2);
         int i = 0;
-        for(double element: temps){
+        for(double element: temps) {
             try {
-                if(element < minTemperature){
+                if(element < minTemperature) {
                     temperatures = copyOf(temperatures, initialLength);
                     throw new InputMismatchException("There is a value less than 273");
                 }
                 temperatures[i + previousLength] = element;
                 sumResult += element;
             }
-            catch (ArrayIndexOutOfBoundsException e){
+            catch (ArrayIndexOutOfBoundsException e) {
                 previousLength = temperatures.length;
                 temperatures = copyOf(temperatures, previousLength*2);
                 temperatures[i + previousLength] = element;
