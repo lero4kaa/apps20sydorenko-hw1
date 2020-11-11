@@ -3,12 +3,13 @@ package ua.edu.ucu.tempseries;
 import java.util.*;
 
 import static java.lang.Math.*;
-import static java.util.Arrays.*;
+import static java.util.Arrays.copyOf;
+
 
 public class TemperatureSeriesAnalysis {
 
-    public double[] temperatures;
-    static final int minTemperature = -273;
+    private double[] temperatures;
+    private final int MIN_TEMPERATURE = -273;
 
     public TemperatureSeriesAnalysis() {
         temperatures = new double[]{};
@@ -16,7 +17,7 @@ public class TemperatureSeriesAnalysis {
 
     public TemperatureSeriesAnalysis(double[] temperatureSeries) {
         for (double temperature : temperatureSeries) {
-            if (temperature < minTemperature) {
+            if (temperature < MIN_TEMPERATURE) {
                 throw new InputMismatchException("There is a value less than -273C");
             }
         }
@@ -54,7 +55,7 @@ public class TemperatureSeriesAnalysis {
     }
 
     public double min() {
-        if(temperatures.length == 0){
+        if (temperatures.length == 0){
             throw new IllegalArgumentException("The temperature array is empty");
         }
         else {
@@ -64,7 +65,7 @@ public class TemperatureSeriesAnalysis {
     }
 
     public double max() {
-        if(temperatures.length == 0) {
+        if (temperatures.length == 0) {
             throw new IllegalArgumentException("The temperature array is empty");
         }
         else {
@@ -80,14 +81,14 @@ public class TemperatureSeriesAnalysis {
     public double findTempClosestToValue(double tempValue) {
         double minDifference = Double.POSITIVE_INFINITY;
         double elementWithMinDifference = 0;
-        for(double temperature: temperatures) {
+        for (double temperature: temperatures) {
             double curDifference = abs(abs(temperature) - abs(tempValue));
-            if(curDifference < minDifference) {
+            if (curDifference < minDifference) {
                 minDifference = curDifference;
                 elementWithMinDifference = temperature;
             }
-            else if(curDifference == minDifference) {
-                if(elementWithMinDifference < temperature) {
+            else if (curDifference == minDifference) {
+                if (elementWithMinDifference < temperature) {
                     elementWithMinDifference = temperature;
                 }
             }
@@ -131,7 +132,7 @@ public class TemperatureSeriesAnalysis {
     public int addTemps(double... temps) {
         int sumResult = 0;
 
-        for(double temperature:temperatures) {
+        for (double temperature:temperatures) {
             sumResult += temperature;
         }
 
@@ -139,9 +140,9 @@ public class TemperatureSeriesAnalysis {
         int initialLength = temperatures.length;
         temperatures = copyOf(temperatures, previousLength*2);
         int i = 0;
-        for(double element: temps) {
+        for (double element: temps) {
             try {
-                if(element < minTemperature) {
+                if (element < MIN_TEMPERATURE) {
                     temperatures = copyOf(temperatures, initialLength);
                     throw new InputMismatchException("There is a value less than 273");
                 }
