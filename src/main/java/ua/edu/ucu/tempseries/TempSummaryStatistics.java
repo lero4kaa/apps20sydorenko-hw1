@@ -2,11 +2,11 @@ package ua.edu.ucu.tempseries;
 
 
 public class TempSummaryStatistics {
+    static final double ALLOWEDDIFF = 0.0001;
     private final double avgTemp;
     private final double devTemp;
     private final double minTemp;
     private final double maxTemp;
-    private final double ALLOWEDDIFF = 0.0001;
 
     public TempSummaryStatistics(double avgTemp, double devTemp,
                                  double minTemp, double maxTemp) {
