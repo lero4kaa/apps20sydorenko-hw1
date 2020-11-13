@@ -9,7 +9,7 @@ import static java.util.Arrays.copyOf;
 public class TemperatureSeriesAnalysis {
 
     private double[] temperatures;
-    private final int MIN_TEMPERATURE = -273;
+    private final int MINTEMPERATURE = -273;
 
     public TemperatureSeriesAnalysis() {
         temperatures = new double[]{};
@@ -17,9 +17,9 @@ public class TemperatureSeriesAnalysis {
 
     public TemperatureSeriesAnalysis(double[] temperatureSeries) {
         for (double temperature : temperatureSeries) {
-            if (temperature < MIN_TEMPERATURE) {
-                throw new InputMismatchException("There is a value " +
-                                                 "less than -273C");
+            if (temperature < MINTEMPERATURE) {
+                throw new InputMismatchException("There is a value "
+                                                 + "less than -273C");
             }
         }
         temperatures = copyOf(temperatureSeries, temperatureSeries.length);
@@ -115,8 +115,7 @@ public class TemperatureSeriesAnalysis {
 
     public TempSummaryStatistics summaryStatistics() {
         isEmpty();
-        TempSummaryStatistics tempStatistics = new TempSummaryStatistics(average(), deviation(), min(), max());
-        return tempStatistics;
+        return new TempSummaryStatistics(average(), deviation(), min(), max());
     }
 
     public int addTemps(double... temps) {
@@ -142,9 +141,10 @@ public class TemperatureSeriesAnalysis {
 
         for (double element: temps) {
             try {
-                if (element < MIN_TEMPERATURE) {
+                if (element < MINTEMPERATURE) {
                     temperatures = copyOf(temperatures, initialLength);
-                    throw new InputMismatchException("There is a value less than 273");
+                    throw new InputMismatchException("There is a value "
+                                                     + "less than 273");
                 }
                 temperatures[i + previousLength] = element;
                 sumResult += element;
