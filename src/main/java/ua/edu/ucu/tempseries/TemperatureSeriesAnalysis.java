@@ -1,9 +1,7 @@
 package ua.edu.ucu.tempseries;
 
-import java.util.*;
-
-import static java.lang.Math.*;
-import static java.util.Arrays.copyOf;
+import java.util.InputMismatchException;
+import java.util.Arrays;
 
 
 public class TemperatureSeriesAnalysis {
@@ -22,7 +20,8 @@ public class TemperatureSeriesAnalysis {
                                                  + "less than -273C");
             }
         }
-        temperatures = copyOf(temperatureSeries, temperatureSeries.length);
+        temperatures = Arrays.copyOf(temperatureSeries,
+                                     temperatureSeries.length);
     }
 
     public double average() {
@@ -44,7 +43,7 @@ public class TemperatureSeriesAnalysis {
             sumSqrtDiff += newElement;
         }
         double meanSqrtDiff = sumSqrtDiff / temperatures.length;
-        return sqrt(meanSqrtDiff);
+        return Math.sqrt(meanSqrtDiff);
     }
 
     public double min() {
@@ -69,7 +68,8 @@ public class TemperatureSeriesAnalysis {
         double minDifference = Double.POSITIVE_INFINITY;
         double elementWithMinDifference = 0;
         for (double temperature: temperatures) {
-            double curDifference = abs(abs(temperature) - abs(tempValue));
+            double curDifference = Math.abs(Math.abs(temperature)
+                                            - Math.abs(tempValue));
             if (curDifference < minDifference) {
                 minDifference = curDifference;
                 elementWithMinDifference = temperature;
@@ -94,7 +94,7 @@ public class TemperatureSeriesAnalysis {
             }
         }
         double[] result;
-        result = copyOf(tempArray, firstZeroIndex);
+        result = Arrays.copyOf(tempArray, firstZeroIndex);
         return result;
     }
 
@@ -109,7 +109,7 @@ public class TemperatureSeriesAnalysis {
             }
         }
         double[] result;
-        result = copyOf(tempArray, firstZeroIndex);
+        result = Arrays.copyOf(tempArray, firstZeroIndex);
         return result;
     }
 
@@ -122,7 +122,7 @@ public class TemperatureSeriesAnalysis {
         int sumResult = 0;
 
         if (temperatures.length == 0) {
-            temperatures = copyOf(temperatures, 1);
+            temperatures = Arrays.copyOf(temperatures, 1);
             temperatures[0] =  temps[0];
             sumResult += temperatures[0];
             temps = Arrays.copyOfRange(temps, 1, temps.length);
@@ -135,14 +135,14 @@ public class TemperatureSeriesAnalysis {
 
         int previousLength = temperatures.length;
         int initialLength = temperatures.length;
-        temperatures = copyOf(temperatures, previousLength*2);
+        temperatures = Arrays.copyOf(temperatures, previousLength*2);
 
         int i = 0;
 
         for (double element: temps) {
             try {
                 if (element < MINTEMPERATURE) {
-                    temperatures = copyOf(temperatures, initialLength);
+                    temperatures = Arrays.copyOf(temperatures, initialLength);
                     throw new InputMismatchException("There is a value "
                                                      + "less than 273");
                 }
@@ -152,7 +152,7 @@ public class TemperatureSeriesAnalysis {
             }
             catch (ArrayIndexOutOfBoundsException e) {
                 previousLength = temperatures.length;
-                temperatures = copyOf(temperatures, previousLength*2);
+                temperatures = Arrays.copyOf(temperatures, previousLength*2);
                 temperatures[i + previousLength] = element;
                 sumResult += element;
             }
