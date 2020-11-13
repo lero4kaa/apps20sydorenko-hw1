@@ -5,10 +5,10 @@ import java.util.Arrays;
 
 
 public class TemperatureSeriesAnalysis {
-
-    private double[] temperatures;
+    
     static final int MINTEMPERATURE = -273;
-
+    private double[] temperatures;
+    
     public TemperatureSeriesAnalysis() {
         temperatures = new double[]{};
     }
