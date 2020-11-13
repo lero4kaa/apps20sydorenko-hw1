@@ -18,67 +18,54 @@ public class TemperatureSeriesAnalysis {
     public TemperatureSeriesAnalysis(double[] temperatureSeries) {
         for (double temperature : temperatureSeries) {
             if (temperature < MIN_TEMPERATURE) {
-                throw new InputMismatchException("There is a value less than -273C");
+                throw new InputMismatchException("There is a value " +
+                                                 "less than -273C");
             }
         }
         temperatures = copyOf(temperatureSeries, temperatureSeries.length);
     }
 
     public double average() {
-        if (temperatures.length == 0) {
-            throw new IllegalArgumentException("The temperature array is empty");
+        isEmpty();
+        double sumElements = 0;
+        for (double element: temperatures) {
+            sumElements += element;
         }
-        else {
-            double sumElements = 0;
-            for(double element: temperatures) {
-                sumElements += element;
-            }
-            return sumElements/temperatures.length;
-        }
+        return sumElements/temperatures.length;
     }
 
     public double deviation() {
-        if (temperatures.length == 0) {
-            throw new IllegalArgumentException("The temperature array is empty");
+        isEmpty();
+        double mean = average();
+        double sumSqrtDiff = 0;
+        for (double temperature : temperatures) {
+            double newElement = temperature - mean;
+            newElement *= newElement;
+            sumSqrtDiff += newElement;
         }
-        else {
-            double mean = average();
-            double sumSqrtDiff = 0;
-            for (double temperature : temperatures) {
-                double newElement = temperature - mean;
-                newElement *= newElement;
-                sumSqrtDiff += newElement;
-            }
-            double meanSqrtDiff = sumSqrtDiff / temperatures.length;
-            return sqrt(meanSqrtDiff);
-        }
+        double meanSqrtDiff = sumSqrtDiff / temperatures.length;
+        return sqrt(meanSqrtDiff);
     }
 
     public double min() {
-        if (temperatures.length == 0){
-            throw new IllegalArgumentException("The temperature array is empty");
-        }
-        else {
-            Arrays.sort(temperatures);
-            return temperatures[0];
-        }
+        isEmpty();
+        Arrays.sort(temperatures);
+        return temperatures[0];
     }
 
     public double max() {
-        if (temperatures.length == 0) {
-            throw new IllegalArgumentException("The temperature array is empty");
-        }
-        else {
-            Arrays.sort(temperatures);
-            return temperatures[temperatures.length-1];
-        }
+        isEmpty();
+        Arrays.sort(temperatures);
+        return temperatures[temperatures.length-1];
     }
 
     public double findTempClosestToZero() {
+        isEmpty();
         return findTempClosestToValue(0);
     }
 
     public double findTempClosestToValue(double tempValue) {
+        isEmpty();
         double minDifference = Double.POSITIVE_INFINITY;
         double elementWithMinDifference = 0;
         for (double temperature: temperatures) {
@@ -97,6 +84,7 @@ public class TemperatureSeriesAnalysis {
     }
 
     public double[] findTempsLessThen(double tempValue) {
+        isEmpty();
         double[] tempArray = new double[temperatures.length];
         int firstZeroIndex = 0;
         for (double temperature : temperatures) {
@@ -111,6 +99,7 @@ public class TemperatureSeriesAnalysis {
     }
 
     public double[] findTempsGreaterThen(double tempValue) {
+        isEmpty();
         double[] tempArray = new double[temperatures.length];
         int firstZeroIndex = 0;
         for (double temperature : temperatures) {
@@ -125,6 +114,7 @@ public class TemperatureSeriesAnalysis {
     }
 
     public TempSummaryStatistics summaryStatistics() {
+        isEmpty();
         TempSummaryStatistics tempStatistics = new TempSummaryStatistics(average(), deviation(), min(), max());
         return tempStatistics;
     }
@@ -157,5 +147,11 @@ public class TemperatureSeriesAnalysis {
             }
         }
         return sumResult;
+    }
+
+    public void isEmpty() {
+        if (temperatures.length == 0) {
+            throw new IllegalArgumentException("The array is empty.");
+        }
     }
 }
