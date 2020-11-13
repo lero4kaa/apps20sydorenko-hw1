@@ -1,5 +1,7 @@
 package ua.edu.ucu.tempseries;
 
+import static java.lang.Math.abs;
+
 public class TempSummaryStatistics {
     private final double avgTemp;
     private final double devTemp;
@@ -12,5 +14,11 @@ public class TempSummaryStatistics {
         this.devTemp = devTemp;
         this.minTemp = minTemp;
         this.maxTemp = maxTemp;
+    }
+
+    public boolean equal(TempSummaryStatistics other){
+        System.out.println(this.avgTemp+other.avgTemp+this.devTemp+ other.devTemp);
+        return other.avgTemp == this.avgTemp && abs(other.devTemp - this.devTemp) < 0.0001
+                && other.minTemp == this.minTemp && other.maxTemp == this.maxTemp;
     }
 }
