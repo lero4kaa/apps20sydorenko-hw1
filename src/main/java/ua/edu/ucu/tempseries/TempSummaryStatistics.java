@@ -16,9 +16,10 @@ public class TempSummaryStatistics {
         this.maxTemp = maxTemp;
     }
 
-    public boolean equal(TempSummaryStatistics other){
-        System.out.println(this.avgTemp+other.avgTemp+this.devTemp+ other.devTemp);
-        return other.avgTemp == this.avgTemp && abs(other.devTemp - this.devTemp) < 0.0001
-                && other.minTemp == this.minTemp && other.maxTemp == this.maxTemp;
+    public boolean equal(TempSummaryStatistics other) {
+        return other.avgTemp == this.avgTemp
+                && abs(other.devTemp - this.devTemp) < 0.0001
+                && other.minTemp == this.minTemp
+                && other.maxTemp == this.maxTemp;
     }
 }
