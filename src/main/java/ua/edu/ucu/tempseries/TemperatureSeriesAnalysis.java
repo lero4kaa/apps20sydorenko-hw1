@@ -122,14 +122,24 @@ public class TemperatureSeriesAnalysis {
     public int addTemps(double... temps) {
         int sumResult = 0;
 
-        for (double temperature:temperatures) {
-            sumResult += temperature;
+        if (temperatures.length == 0) {
+            temperatures = copyOf(temperatures, 1);
+            temperatures[0] =  temps[0];
+            sumResult += temperatures[0];
+            temps = Arrays.copyOfRange(temps, 1, temps.length);
+        }
+        else {
+            for (double temperature : temperatures) {
+                sumResult += temperature;
+            }
         }
 
         int previousLength = temperatures.length;
         int initialLength = temperatures.length;
         temperatures = copyOf(temperatures, previousLength*2);
+
         int i = 0;
+
         for (double element: temps) {
             try {
                 if (element < MIN_TEMPERATURE) {
@@ -138,6 +148,7 @@ public class TemperatureSeriesAnalysis {
                 }
                 temperatures[i + previousLength] = element;
                 sumResult += element;
+                i++;
             }
             catch (ArrayIndexOutOfBoundsException e) {
                 previousLength = temperatures.length;
