@@ -7,7 +7,7 @@ import java.util.Arrays;
 public class TemperatureSeriesAnalysis {
 
     private double[] temperatures;
-    private final int MINTEMPERATURE = -273;
+    static final int MINTEMPERATURE = -273;
 
     public TemperatureSeriesAnalysis() {
         temperatures = new double[]{};
