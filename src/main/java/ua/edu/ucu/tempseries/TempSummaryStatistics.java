@@ -2,11 +2,13 @@ package ua.edu.ucu.tempseries;
 
 import static java.lang.Math.abs;
 
+
 public class TempSummaryStatistics {
     private final double avgTemp;
     private final double devTemp;
     private final double minTemp;
     private final double maxTemp;
+    private final double ALLOWEDDIFF = 0.0001;
 
     public TempSummaryStatistics(double avgTemp, double devTemp,
                                  double minTemp, double maxTemp) {
@@ -18,7 +20,7 @@ public class TempSummaryStatistics {
 
     public boolean equal(TempSummaryStatistics other) {
         return other.avgTemp == this.avgTemp
-                && abs(other.devTemp - this.devTemp) < 0.0001
+                && abs(other.devTemp - this.devTemp) < ALLOWEDDIFF
                 && other.minTemp == this.minTemp
                 && other.maxTemp == this.maxTemp;
     }
